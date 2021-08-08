@@ -15,7 +15,7 @@ $(NAME): $(O_FILES)
 	gcc -g -Wall -Wextra -Werror $(O_FILES) ./libft/libft.a -o $(NAME)
 
 %.o: %.c $(HEADER)
-	gcc -c $<
+	gcc -c $< -o $@
 
 clean:
 	rm -f $(O_FILES)
@@ -28,3 +28,6 @@ fclean: clean
 bonus: re
 
 re: fclean all
+
+run: all
+	./push_swap 9 3 7 5 6 1 4 5 6

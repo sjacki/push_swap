@@ -19,9 +19,10 @@ void		write_steck(int	*f_steck, int	*s_steck, int argc)
 	x = 0;
 	while (x < argc - 1)
 	{
-		printf("%d				%d\n", f_steck[x], s_steck[x]);
-		x++;
+	    ft_printf("%d				%d\n", f_steck[x], s_steck[x]);
+	    x++;
 	}
+    ft_printf("\n\n");
 }
 
 void		sa(int	*f_steck, int	*s_steck, int argc)
@@ -31,7 +32,7 @@ void		sa(int	*f_steck, int	*s_steck, int argc)
 	temp = f_steck[0];
 	f_steck[0] = f_steck[1];
 	f_steck[1] = temp;
-	printf("		USE SA\nA				B\n---------------------------------\n");
+	ft_printf("		USE SA\nA				B\n---------------------------------\n");
 	write_steck(f_steck, s_steck, argc);
 }
 
@@ -41,7 +42,7 @@ void		pa(int	*f_steck, int	*s_steck, int argc)
 	{
 			
 	}
-	printf("		USE PA\nA				B\n---------------------------------\n");
+	ft_printf("		USE PA\nA				B\n---------------------------------\n");
 	write_steck(f_steck, s_steck, argc);
 }
 
@@ -52,16 +53,16 @@ void		sb(int	*f_steck, int	*s_steck, int argc)
 	temp = s_steck[0];
 	s_steck[0] = s_steck[1];
 	s_steck[1] = temp;
-	printf("		USE SB\nA				B\n---------------------------------\n");
+	ft_printf("		USE SB\nA				B\n---------------------------------\n");
 	write_steck(f_steck, s_steck, argc);
 }
 
 void		ss(int	*f_steck, int	*s_steck, int argc)
 {
-	printf("		USE SS\nA				B\n---------------------------------\nV                               V\n");
+    ft_printf("		USE SS\nA				B\n---------------------------------\nV                               V\n");
 	sa(f_steck, s_steck, argc);
 	sb(f_steck, s_steck, argc);
-	printf("^-------------------------------^\n---------------------------------\n");
+	ft_printf("^-------------------------------^\n---------------------------------\n");
 }
 
 
@@ -86,7 +87,7 @@ int			main(int argc, char **argv)
 		x++;
 	}
 	x = 0;
-	printf("	init a and b steck\nA				B\n---------------------------------\n");
+	ft_printf("	init a and b steck\nA				B\n---------------------------------\n");
 	write_steck(f_steck, s_steck, argc);
 	sa(f_steck, s_steck, argc);
 	sb(f_steck, s_steck, argc);
