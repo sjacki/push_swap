@@ -17,4 +17,13 @@
 #include <stdlib.h>
 #include "../libft/header/libft.h"
 
+typedef struct  s_list
+{
+    struct s_list   *next;
+    struct s_list   *begin;
+    int             value;
+    int 			end;
+}               t_list;
+
+
 #endif

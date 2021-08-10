@@ -12,84 +12,125 @@
 
 #include "../header/header.h"
 
-void		write_steck(int	*f_steck, int	*s_steck, int argc)
+void 		draw_list(t_list *steck_head)
 {
-	int x;
+	t_list 	*buf;
 
-	x = 0;
-	while (x < argc - 1)
+	buf = steck_head;
+	while (!buf->end)
 	{
-	    ft_printf("%d				%d\n", f_steck[x], s_steck[x]);
-	    x++;
+		ft_printf("%d\n", buf->value);
+		buf = buf->next;
 	}
-    ft_printf("\n\n");
+	ft_printf("%d\n\n", buf->value);
 }
 
-void		sa(int	*f_steck, int	*s_steck, int argc)
+void		sa(t_list *a_steck_head)
 {
 	int temp;
 
-	temp = f_steck[0];
-	f_steck[0] = f_steck[1];
-	f_steck[1] = temp;
-	ft_printf("		USE SA\nA				B\n---------------------------------\n");
-	write_steck(f_steck, s_steck, argc);
+	temp = a_steck_head->value;
+	a_steck_head->value = a_steck_head->next->value;
+	a_steck_head->next->value = temp;
+	draw_list(a_steck_head);
 }
 
-void		pa(int	*f_steck, int	*s_steck, int argc)
+/*void		pa(int	*f_steck, int	*s_steck, int argc)
 {
 	if (s_steck[0] != 0)
 	{
 			
 	}
-	ft_printf("		USE PA\nA				B\n---------------------------------\n");
-	write_steck(f_steck, s_steck, argc);
-}
+}*/
 
-void		sb(int	*f_steck, int	*s_steck, int argc)
+/*void		sb(int	*f_steck, int	*s_steck, int argc)
 {
 	int temp;
 
 	temp = s_steck[0];
 	s_steck[0] = s_steck[1];
 	s_steck[1] = temp;
-	ft_printf("		USE SB\nA				B\n---------------------------------\n");
-	write_steck(f_steck, s_steck, argc);
-}
+}*/
 
-void		ss(int	*f_steck, int	*s_steck, int argc)
+t_list		*create_new_list(int value)
 {
-    ft_printf("		USE SS\nA				B\n---------------------------------\nV                               V\n");
-	sa(f_steck, s_steck, argc);
-	sb(f_steck, s_steck, argc);
-	ft_printf("^-------------------------------^\n---------------------------------\n");
+	t_list *buf;
+
+	buf = (t_list*)malloc(sizeof(t_list));
+	buf->next = buf;
+	buf->begin = buf;
+	buf->value = value;
+	buf->end = 1;
+	return (buf);
 }
 
+t_list 		*add_node_next(t_list *steck_tail, t_list *steck_head, int value)
+{
+	t_list	*buf;
 
+	buf = create_new_list(value);
+	steck_tail->end = 0;
+	steck_tail->next = buf;
+	buf->next = steck_head;
+	buf->begin = steck_tail;
+	return (buf);
+}
+
+t_list 		*add_node_begin(t_list *steck_tail, t_list *steck_head, int value)
+{
+	t_list	*buf;
+
+	buf = create_new_list(value);
+	steck_head->end = 0;
+	buf->end = 0;
+	buf->next = steck_head;
+	buf->begin = steck_tail;
+	return (buf);
+}
+
+void 		err(void)
+{
+	ft_printf("ERROR\n");
+	exit(1);
+}
 
 int			main(int argc, char **argv)
 {
-	int		*f_steck;
-	int		*s_steck;
 	int		x;
 	int		y;
 
 	x = 1;
 	y = 0;
 
-	f_steck = (int*)malloc(argc * sizeof(int));
-	s_steck = (int*)malloc(argc * sizeof(int));
+	t_list *a_steck_head;
+	t_list *a_steck_tail;
+//	t_list *b_steck_head;
+//	t_list *b_steck_tail;
+
+	a_steck_head = NULL;
 	while(x < argc)
 	{
 		if (ft_isdigit(*argv[x]) || *argv[x] == 45)
+		{
+			y = 0;
+			while (ft_isdigit(argv[x][y]) || (argv[x][y] == 45 && y == 0))
+				y++;
+			if (y != (int)ft_strlen(argv[x]))
+				err();
 			y = ft_atoi(argv[x]);
-		f_steck[x - 1] = y;
+			if (a_steck_head == NULL)
+			{
+				a_steck_head = create_new_list(y);
+				a_steck_tail = a_steck_head;
+			}
+			else
+				a_steck_tail = add_node_next(a_steck_tail, a_steck_head, y);
+		}
+		else
+			err();
 		x++;
 	}
-	x = 0;
-	ft_printf("	init a and b steck\nA				B\n---------------------------------\n");
-	write_steck(f_steck, s_steck, argc);
-	sa(f_steck, s_steck, argc);
-	sb(f_steck, s_steck, argc);
-	ss(f_steck, s_steck, argc);
+	draw_list(a_steck_head);
+	sa(a_steck_head);
+
 }
