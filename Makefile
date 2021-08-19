@@ -2,7 +2,8 @@ NAME = push_swap
 
 FLAG			=		-Wextra -Werror -Wall
 
-C_FILES			=		srcs/main.c
+C_FILES			=		srcs/main.c srcs/list_control.c srcs/steck_control.c \
+						srcs/init_a_steck.c
 
 O_FILES			=		$(C_FILES:.c=.o)
 

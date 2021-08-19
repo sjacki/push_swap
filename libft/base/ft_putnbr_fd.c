@@ -26,7 +26,7 @@ void		finishputnbr(int dex, int nb, int res, int fd)
 	write(fd, &nb, 1);
 }
 
-void		ft_putnbr_fd(int n, int fd)
+void		ft_putnbr(int n)
 {
 	int		res;
 	int		nb;
@@ -36,12 +36,12 @@ void		ft_putnbr_fd(int n, int fd)
 	nb = n;
 	if (n == -2147483648)
 	{
-		write(fd, "-2", 2);
+		write(1, "-2", 2);
 		nb = 147483648;
 	}
 	else if (n < 0)
 	{
-		write(fd, "-", 1);
+		write(1, "-", 1);
 		nb *= -1;
 	}
 	res = nb;
@@ -50,5 +50,5 @@ void		ft_putnbr_fd(int n, int fd)
 		dex *= 10;
 		res = res / 10;
 	}
-	finishputnbr(dex, nb, res, fd);
+	finishputnbr(dex, nb, res, 1);
 }
